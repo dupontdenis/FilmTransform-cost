@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <a href="index.html" class="btn btn-secondary mb-3">Back to Home</a>
+        <h1>Film List</h1>
+        <div id="films-container">
+            <!-- Film list will be inserted here by JavaScript -->
+        </div>
+    </div>
+    <!-- Custom JS to import and render films -->
+    <script type="module">
+        import { transformedFilms as films } from './transform.mjs';
+
+        const filmsContainer = document.getElementById('films-container');
+        const headers = Object.keys(films[0]);
+        const tableTemplate = `
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        ${headers.map(header => `<th>${header.charAt(0).toUpperCase() + header.slice(1)}</th>`).join('')}
+                    </tr>
+                </thead>
+                <tbody>
+                    ${films.map(film => `
+                        <tr>
+                            ${headers.map(header => `<td>${film[header]}</td>`).join('')}
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+        filmsContainer.innerHTML = tableTemplate;
+    </script>
+</body>
+</html>
